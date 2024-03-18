@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, JSXElementConstructor } from "react";
-import { Table, Empty } from "antd";
+import { Table, Empty, TableProps } from "antd";
 import { updateTimer } from "./timer";
 import { capturarMinutos } from "./timer";
 import TagAtrasado from "./TagAtrasado";
@@ -12,7 +12,7 @@ import TagNoprazo from "./TagNoprazo";
 type AlignType = "left" | "right" | "center";
 
 interface DataType {
-  key: string;
+  key: React.Key;
   tag: Element;
   registro: string;
   interface: string; // Renomeado de hora_execucao para interface
@@ -20,46 +20,56 @@ interface DataType {
   resultado: string;
   action: Element;
   timer: string;
+  setor: string;
 }
 
 const columns = [
   {
     title: "Status",
     dataIndex: "tag",
-    key: "tag",
     align: "center" as AlignType,
   },
   {
     title: "Nº do registro",
     dataIndex: "registro",
-    key: "registro",
   },
   {
     title: "Interface",
     dataIndex: "interface",
-    key: "interface",
   },
 
   {
     title: "Exame",
     dataIndex: "exame",
-    key: "exame",
   },
   {
     title: "Resultado",
     dataIndex: "resultado",
-    key: "resultado",
   },
   {
     title: "Tempo restante",
     dataIndex: "timer",
-    key: "timer",
   },
 
   {
     title: "Setor",
     dataIndex: "setor",
-    key: "setor",
+    filters: [
+      {
+        text: "MOR-Hematologia",
+        value: "MOR-Hematologia",
+      },
+      {
+        text: "MOR-Coagulação",
+        value: "MOR-Coagulação",
+      },
+    ],
+    onFilter: (value: string | boolean | React.Key, record: DataType) => {
+      if (typeof value === "string") {
+        return record.setor.indexOf(value) === 0;
+      }
+      return false;
+    },
   },
 
   {
@@ -145,12 +155,15 @@ const TableComponent: React.FC = () => {
     };
   }, []);
 
+  const onChange: TableProps<DataType>["onChange"] = (filters) => {};
+
   return (
     <Table
       columns={columns}
       dataSource={data}
       pagination={false}
       locale={customLocale}
+      onChange={onChange}
     />
   );
 };
