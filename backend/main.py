@@ -42,17 +42,19 @@ def insert_database(dash_list: List[schemas.DashboardBase], db: Session = Depend
     
     return inserted_dashboards
 
-@app.post("/update/", response_model=schemas.DashboardUpdate)
-def update_database(dash: schemas.DashboardUpdate, db: Session = Depends(get_db)):
+@app.post("/update/", response_model=List[schemas.DashboardUpdate])
+def update_database(dash_list: List[schemas.DashboardUpdate], db: Session = Depends(get_db)):
     
-    update_comunicacao = crud.update_comunicacao(db, exame=dash.exame, registro=dash.registro, resultado=dash.resultado)
-    if update_comunicacao:
-        
-        return update_comunicacao
-
-    else:
-        
-        raise HTTPException(HTTPStatus.BAD_REQUEST, detail="Erro ao atualizar a comunicação")
+    updated_dashboards = []
+    
+    for dash in dash_list:
+        update_comunicacao = crud.update_comunicacao(db, exame=dash.exame, registro=dash.registro, resultado=dash.resultado)
+        if update_comunicacao:
+            updated_dashboards.append(update_comunicacao)
+        else:
+            raise HTTPException(HTTPStatus.BAD_REQUEST, detail="Erro ao atualizar a comunicação")
+    
+    return updated_dashboards
 
 @app.post("/notify/", response_model=schemas.DashboardID)
 def notify(dash: schemas.DashboardID, db: Session = Depends(get_db)):

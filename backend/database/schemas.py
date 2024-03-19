@@ -30,4 +30,5 @@ class DashboardID(BaseModel):
 class DashboardList(BaseModel):
     dashboards: List[DashboardBase]
 
-
+class DashboardUpdateList(BaseModel):
+    dashboards: List[DashboardUpdate]

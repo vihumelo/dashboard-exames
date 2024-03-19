@@ -56,8 +56,7 @@ def insert_database():
                 
             
             if post_update_list:    
-                response = requests.post(URL + UPDATE_ENDPOINT, json=data_update)
-                
+                response = requests.post(URL + UPDATE_ENDPOINT, json=post_update_list)
                 if response.status_code == 200: pass
                 else:
                     print(f'Erro na função update: {response.json()} - registro: {registro}')
@@ -90,6 +89,7 @@ def insert_database():
         response = requests.post(URL + INSERT_ENDPOINT, json=postlist)
         print(f'{response.json()} - registro: {registro}')
 
+    # os.remove(file)
                 
 
 
