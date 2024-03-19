@@ -30,6 +30,10 @@ const columns = [
     align: "center" as AlignType,
   },
   {
+    title: "Tempo restante",
+    dataIndex: "timer",
+  },
+  {
     title: "Nº do registro",
     dataIndex: "registro",
   },
@@ -46,11 +50,6 @@ const columns = [
     title: "Resultado",
     dataIndex: "resultado",
   },
-  {
-    title: "Tempo restante",
-    dataIndex: "timer",
-  },
-
   {
     title: "Setor",
     dataIndex: "setor",

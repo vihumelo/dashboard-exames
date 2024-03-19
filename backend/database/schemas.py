@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
-from typing import Optional
+from typing import List
 
 
 class DashboardUpdate(BaseModel):
@@ -8,7 +8,6 @@ class DashboardUpdate(BaseModel):
     exame: str
     registro: str
     resultado: str
-    setor: str
 
 class DashboardBase(BaseModel):
 
@@ -28,5 +27,7 @@ class DashboardID(BaseModel):
     
     id: int
 
+class DashboardList(BaseModel):
+    dashboards: List[DashboardBase]
 
 

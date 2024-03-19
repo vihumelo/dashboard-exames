@@ -1,2 +1,4 @@
 backend/.venv
 backend/__pycache__
+.gitignore
+backend/scrap_old.py
